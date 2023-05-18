@@ -5,13 +5,25 @@ This program analyzes baseball pitch data, which is aggregated by pitcher, and g
 # Important!!!
 You must replace 'SOU_GOL' in the filter out pitchers from the specific team line with your team idenfifier or the program will not work!!!!
 
-#Dependencies
+# Dependencies
 This program depends on the following Python libraries:
 
 os
+
 matplotlib
+
 pandas
+
 math
+
 tkinter
+
 matplotlib.backends.backend_pdf
+
 Ensure you have all these dependencies installed before running the program. You can install these libraries using pip:
+
+pip install matplotlib pandas tkinter
+
+Note: os and math are part of the standard Python library and do not need to be installed separately.
+
+
