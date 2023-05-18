@@ -26,4 +26,52 @@ pip install matplotlib pandas tkinter
 
 Note: os and math are part of the standard Python library and do not need to be installed separately.
 
+# Usage
+Run the program.
 
+The program will open a file dialog. Select the CSV file with the data to be analyzed.
+
+The program will automatically create a new directory based on the selected file's name, and within that directory, it will create a sub-directory for each pitcher.
+
+Inside each pitcher's directory, the program will create a PDF file with detailed reports including various types of charts and tables.
+
+# Program Features
+The program performs the following operations:
+
+It filters out pitchers from a specific team.
+
+The data is then aggregated by each pitcher. Various metrics such as release speed, spin rate, spin axis, release height, extension, vertical break, induced vertical break, horizontal break, zone speed, and vertical approach angle are averaged. The maximum release speed is also determined.
+
+The whiff rate for each type of pitch is calculated. Whiff rate is the number of swinging strikes divided by the total number of swings for a particular pitch type.
+
+The program then generates a PDF report for each pitcher, which includes:
+
+A scatter plot representing pitch locations by pitch type.
+
+A table of aggregated data for each pitch type.
+
+A table of whiff rate data for each pitch type.
+
+Tables of line-by-line data in chunks of 50 rows each.
+
+# Data Format
+The input data should be in CSV format with the following columns:
+
+Pitcher: The name of the pitcher.
+PitcherTeam: The team the pitcher belongs to.
+TaggedPitchType: The type of pitch thrown.
+PitchCall: The result of the pitch.
+RelSpeed: The release speed of the pitch.
+SpinRate: The spin rate of the pitch.
+SpinAxis: The spin axis of the pitch.
+RelHeight: The release height of the pitch.
+Extension: The extension of the pitcher's arm when throwing.
+VertBreak: The vertical break of the pitch.
+InducedVertBreak: The induced vertical break of the pitch.
+HorzBreak: The horizontal break of the pitch.
+ZoneSpeed: The speed of the pitch in the strike zone.
+VertApprAngle: The vertical approach angle of the pitch.
+ExitSpeed: The exit speed of the ball when hit.
+Distance: The distance the ball traveled.
+PlateLocSide: The location of the pitch in relation to the side of the plate.
+PlateLocHeight: The height of the pitch when it crosses the plate.
