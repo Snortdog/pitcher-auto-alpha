@@ -58,20 +58,68 @@ Tables of line-by-line data in chunks of 50 rows each.
 The input data should be in CSV format with the following columns:
 
 Pitcher: The name of the pitcher.
+
 PitcherTeam: The team the pitcher belongs to.
+
 TaggedPitchType: The type of pitch thrown.
+
 PitchCall: The result of the pitch.
+
 RelSpeed: The release speed of the pitch.
+
 SpinRate: The spin rate of the pitch.
+
 SpinAxis: The spin axis of the pitch.
+
 RelHeight: The release height of the pitch.
+
 Extension: The extension of the pitcher's arm when throwing.
+
 VertBreak: The vertical break of the pitch.
+
 InducedVertBreak: The induced vertical break of the pitch.
+
 HorzBreak: The horizontal break of the pitch.
+
 ZoneSpeed: The speed of the pitch in the strike zone.
+
 VertApprAngle: The vertical approach angle of the pitch.
+
 ExitSpeed: The exit speed of the ball when hit.
+
 Distance: The distance the ball traveled.
+
 PlateLocSide: The location of the pitch in relation to the side of the plate.
+
 PlateLocHeight: The height of the pitch when it crosses the plate.
+
+# Sample Output
+Upon running this script, a new directory is created based on the input CSV file name. Within this directory, there will be a directory for each pitcher, which will contain a PDF report for that pitcher.
+
+The generated PDF report will include:
+
+Page 1:
+
+A scatter plot of pitches by type, with different colors representing different pitch types.
+
+A table summarizing the aggregated data, which includes average values and maximum values for various metrics.
+
+A table showing the whiff rate for each pitch type.
+
+Subsequent pages: Tables containing line-by-line data. If there is a lot of data, it will be split into chunks of 50 rows per page.
+
+At the end of the execution, the program will print the path to the generated PDF report in the console.
+
+# Troubleshooting
+
+Issue: The program doesn't run or shows an error related to a missing module.
+
+Solution: Ensure you have installed all the necessary Python modules listed in the 'Dependencies' section of this document.
+
+Issue: The program doesn't read the file or the data correctly.
+
+Solution: Ensure that your CSV file is correctly formatted, with all the necessary columns. The expected columns are listed in the 'Data Format' section of this document.
+
+Issue: The program creates a PDF, but some of the pages are blank or the data doesn't look right.
+
+Solution: Ensure that your data is valid and correctly formatted. Check for any missing or malformed data that could be causing the issue.
