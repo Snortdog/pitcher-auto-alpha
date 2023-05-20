@@ -5,6 +5,19 @@ This program analyzes Trackman baseball pitch data, which is aggregated by pitch
 # Important!!!
 You must replace 'SOU_GOL' in the filter out pitchers from the specific team line with your team idenfifier or the program will not work!!!!
 
-# Under Construction
+# Requirements:
 
-keller pls wait to mess with this until I can set it up. added a bunch of stuff. 
+python version 3.0 or higher
+
+The following python libraries: 
+
+matplotlib
+
+pandas
+
+math
+
+numpy
+
+# Current list of features: 
+A lot. I'll update this later. 
