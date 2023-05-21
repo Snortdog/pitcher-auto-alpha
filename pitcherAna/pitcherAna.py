@@ -1,5 +1,6 @@
 import os
 import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
 import pandas as pd
 import numpy as np
 import math 
@@ -155,8 +156,19 @@ for pitcher in pitchers:
     aggregated_data.columns.names = [None]  # Remove the top level column name
     aggregated_data.rename(columns={'index': 'AggregatedData'}, inplace=True)
 
+    # Change the 'index' column name to 'AggregatedData'
+    aggregated_data.rename(columns={'index': 'AggregatedData'}, inplace=True)
 
-   
+    # Create a dictionary with the current AggregatedData values and the desired new values
+    row_rename_mappings = {
+        'RelSpeed': 'Velo',
+        #'old_row_name_2': 'new_row_name_2',
+        # Add more mappings if necessary
+}
+
+    # Update the 'AggregatedData' column values with the new names
+    aggregated_data['AggregatedData'] = aggregated_data['AggregatedData'].replace(row_rename_mappings)
+
 
     
     # Create a directory for each pitcher inside the new directory
@@ -180,10 +192,11 @@ for pitcher in pitchers:
     chunks = [line_by_line_data[i:i+rows_per_page] for i in range(0, line_by_line_data.shape[0], rows_per_page)]
     
     # Create a figure and add subplots to it
-    fig = plt.figure(figsize=(20, 20))
+    fig = plt.figure(figsize=(20, 30))
+    gs = gridspec.GridSpec(5, 1, hspace=.5)
     fig.suptitle('Southern Miss Baseball\n' + f"{pitcher} {os.path.basename(file_path).split('.')[0]}", fontsize=20, y=0.92)
 
-    ax1 = fig.add_subplot(311, aspect='equal')
+    ax1 = fig.add_subplot(411, aspect='equal')
     scatter = ax1.scatter(x=pitcher_data['PlateLocSide'], y=pitcher_data['PlateLocHeight'],
                         c=pitcher_data['TaggedPitchType'].map(pitch_type_colors).fillna('gray'), alpha=0.5)
     pitch_types = pitcher_data['TaggedPitchType'].unique()
@@ -200,7 +213,7 @@ for pitcher in pitchers:
     ax1.set_xlim([-3, 3])  # setting x-axis limits
     ax1.set_ylim([0, 5])   # setting y-axis limits
     
-    ax3 = fig.add_subplot(312, aspect='equal')  # adding the third subplot
+    ax3 = fig.add_subplot(412, aspect='equal')  # adding the third subplot
     scatter = ax3.scatter(x=pitcher_data['HorzBreak'], y=pitcher_data['InducedVertBreak'],
                           c=pitcher_data['TaggedPitchType'].map(pitch_type_colors).fillna('gray'), alpha=0.5)
     ax3.set_title('Movement (Horz/IVB)')  # setting the title of the plot
@@ -226,11 +239,41 @@ for pitcher in pitchers:
     #create_heatmap(pitcher_data, 'Right', ax5)
     #ax5.set_title('Heatmap vs Right')
 
+    # New subplot for Release Window plot
+    ax4 = fig.add_subplot(413, aspect='equal')
+    ax4.scatter(x=pitcher_data['RelSide'], y=pitcher_data['RelHeight'],
+                c=pitcher_data['TaggedPitchType'].map(pitch_type_colors).fillna('gray'), alpha=0.5)
+    ax4.set_title('ReleaseWindow')  # setting the title of the plot
+    x_min, x_max = -4, 4  # Define the min and max values for the x-axis
+    y_min, y_max = 2, 7   # Define the min and max values for the y-axis
+    ax4.set_xlim(x_min, x_max)
+    ax4.set_ylim(y_min, y_max)
+     # Add a gray grid overlay to the ReleaseWindow figure (ax4)
+    ax4.grid(color='gray', linestyle='-', linewidth=0.5)
+
+    # Apply legend for the new plot
+    pitch_types = pitcher_data['TaggedPitchType'].unique()
+    legend_elements = [plt.Line2D([0], [0], marker='o', color='w', label=pitch_type,
+                                markerfacecolor=pitch_type_colors.get(pitch_type, 'gray'), markersize=10)
+                        for pitch_type in pitch_types]
+    ax4.legend(handles=legend_elements, title="Pitch Types")
+    
+
     # Add aggregated data as a table
-    ax2 = fig.add_subplot(313)
+    ax2 = fig.add_subplot(414)
     ax2.axis('tight')
     ax2.axis('off')
-    aggregated_table = ax2.table(cellText=aggregated_data.values, colLabels=aggregated_data.columns, cellLoc = 'center', loc='center', fontsize=14)
+    aggregated_table = ax2.table(cellText=aggregated_data.values, colLabels=aggregated_data.columns, cellLoc='center', loc='center')
+
+
+
+    # Changing the column widths
+    colWidths = [0.2 for x in aggregated_data.columns]  # Set your own width here
+    aggregated_table.auto_set_font_size(False)
+    aggregated_table.set_fontsize(10)
+    aggregated_table.scale(1, 1.5)  # The second parameter is the row height, modify if needed
+    aggregated_table.auto_set_column_width(col=list(range(len(aggregated_data.columns))))  # Provide the columns to auto-adjust
+  
 
     # Set header font size for aggregated table
     for i in range(len(aggregated_data.columns)):
